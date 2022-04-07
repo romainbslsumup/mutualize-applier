@@ -4,7 +4,9 @@ import kotlin.test.Test
 
 internal class ExpectKtTest {
 
-    fun test_applier(applier: DailyStockApplier<DailyStocksItemCriticalQuantityWasSet, DailyStock>) {
+    @Test
+    fun test_applier() {
+        val applier = criticalQuantityWasSetReadModelApplier()
         val event = DailyStocksItemCriticalQuantityWasSet(10)
 
         val inDomain = DailyStockDomain("rootUUID", 0, "uuid")
@@ -12,22 +14,12 @@ internal class ExpectKtTest {
         val inReadModel = DailyStocksItemReadModel("uuid")
         println("inReadModel: $inReadModel")
 
-        val (newDomain, domainDomainOperation) = applier.apply(event, inDomain)
-        println("newDomain: $newDomain")
+        val domainDomainOperation = applier.apply(event, inDomain)
+        println("updatedDomain: $inDomain")
         println("domainDomainOperation: $domainDomainOperation")
 
-        val (newReadModel, domainReadModelOperation) = applier.apply(event, inReadModel)
-        println("newReadModel: $newReadModel")
+        val domainReadModelOperation = applier.apply(event, inReadModel)
+        println("updatedReadModel: $inReadModel")
         println("domainReadModelOperation: $domainReadModelOperation")
-    }
-
-    @Test
-    fun test_applier_1() {
-        test_applier(criticalQuantityWasSetReadModelApplier_1())
-    }
-
-    @Test
-    fun test_applier_2() {
-        test_applier(criticalQuantityWasSetReadModelApplier_2())
     }
 }
